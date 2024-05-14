@@ -27,10 +27,12 @@ public class FrameCustom extends Frame{
        panel.add(Button3);
        Button1.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent e) {
+               boolean isFilledOut = false;
                JDialog dialog = new JDialog();
                dialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
                dialog.setSize(400, 400);
-                Button ButtonSelectFile = new Button("Select File");
+               Button ButtonSelectFile = new Button("Select File");
+               dialog.add(ButtonSelectFile,BorderLayout.NORTH);
                 ButtonSelectFile.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         JFileChooser fileChooser = new JFileChooser();
@@ -40,7 +42,10 @@ public class FrameCustom extends Frame{
                     }
 
                 });
-                dialog.add(ButtonSelectFile);
+               JTextArea field1 = new JTextArea();
+               JTextField field2 = new JTextField(20);
+               dialog.add(field1, BorderLayout.CENTER);
+               dialog.add(field2, BorderLayout.SOUTH);
                dialog.setVisible(true);
            }
        });
