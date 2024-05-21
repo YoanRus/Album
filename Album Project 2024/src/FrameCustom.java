@@ -54,23 +54,23 @@ public class FrameCustom extends Frame {
                 });
                 JTextArea field1 = new JTextArea();
                 JTextField field2 = new JTextField(20);
-                TextFieldOne = field1.getText();
-                TextFieldTwo = field1.getText();
-                if (field1.getText() != null && field2.getText() != null && filepath != "") {
-                    isFilledOut = true;
-                    System.out.println("We are on baby");
-                }
+
                 Button buttonSubmit = new Button("Submit");
                 dialog.add(field1, BorderLayout.CENTER);
                 dialog.add(field2, BorderLayout.SOUTH);
                 dialog.add(buttonSubmit, BorderLayout.EAST);
                 buttonSubmit.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
+                        TextFieldOne = field1.getText();
+                        TextFieldTwo = field2.getText();
+                        if ((field1.getText()!=null)&&(filepath != "")&&(field2.getText()!=null)) {
+                            isFilledOut = true;
+                            System.out.println("We are on baby");
+                        }
                         if(isFilledOut){
                             File file = new File("ImageData");
                             try {
                                 FileWriter writer = new FileWriter(file, true);
-                                writer.write("NEW");
                                 writer.append(filepath);
                                 writer.append('\n');
                                 writer.append(TextFieldOne);
