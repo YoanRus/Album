@@ -1,17 +1,20 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class FrameCustom extends Frame {
     boolean isFilledOut = false;
-    String filepath = "";
+    String filepath = null;
     String TextFieldOne;
     String TextFieldTwo;
     boolean dialogVisibility = true;
@@ -63,9 +66,9 @@ public class FrameCustom extends Frame {
                     public void actionPerformed(ActionEvent e) {
                         TextFieldOne = field1.getText();
                         TextFieldTwo = field2.getText();
-                        if ((field1.getText()!=null)&&(filepath != "")&&(field2.getText()!=null)) {
+                        if ((field1.getText()!=null)&&(filepath != null)&&(field2.getText()!=null)) {
                             isFilledOut = true;
-                            System.out.println("We are on baby");
+
                         }
                         if(isFilledOut){
                             File file = new File("ImageData");
@@ -78,6 +81,7 @@ public class FrameCustom extends Frame {
                                 writer.append(TextFieldTwo);
                                 writer.append('\n');
                                 dialogVisibility = false;
+                                dialog.setVisible(false);
                                 writer.close();
                             }
                             catch(IOException m){
@@ -86,11 +90,20 @@ public class FrameCustom extends Frame {
                         }
                     }
                 });
-
-                if (!dialogVisibility) {
-                    dialog.setVisible(false);
-                } else {
-                    dialog.setVisible(true);
+                dialog.setVisible(true);
+            }
+        });
+        Button2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Scanner scanner = new Scanner("ImageData");
+                try {
+                    BufferedImage myPicture = ImageIO.read(new File(scanner.nextLine()));
+                    JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+                    panel.add(picLabel);
+                }
+                catch(IOException m){
+                    System.out.println("FileIsNotFound");
                 }
             }
         });
