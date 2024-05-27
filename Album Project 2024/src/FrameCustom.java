@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class FrameCustom extends Frame {
+    public CanvasDefault canvas = new CanvasDefault();
     boolean isFilledOut = false;
     String filepath = null;
     String TextFieldOne;
@@ -22,20 +23,27 @@ public class FrameCustom extends Frame {
     FrameCustom() {
         JFrame frame = new JFrame("Album Organized");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(720, 480);
+        frame.setSize(1200, 720);
         JButton Button1 = new JButton("Add Image");
         JButton Button2 = new JButton("Catagories");
         JButton Button3 = new JButton("Upload File");
-        JPanel panel = new JPanel();
+        JPanel HeaderPane = new JPanel();
 
-        panel.add(Button1);
-        //panel.add(Box.createRigidArea(new Dimension(5, 0)));
-        //We can add spaces if we prefer to do so
+        HeaderPane.add(Button1);
+        HeaderPane.add(Button2);
+        HeaderPane.setBackground(Color.BLACK);
+        frame.setLayout(null);
 
-        panel.add(Button2);
-        // panel.add(Box.createRigidArea(new Dimension(5, 0)));
+        canvas.setLayout(new BorderLayout());
+        canvas.add(new Button("Ender"), BorderLayout.SOUTH);
+        canvas.setPreferredSize(new Dimension(1200, 720));
+        JScrollPane scrollPane = new JScrollPane(canvas,ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollPane.setBounds(0, 40, 1180, 700);
+        scrollPane.setBackground(Color.BLACK);
+        frame.add(scrollPane);
 
-        panel.add(Button3);
+
+        HeaderPane.add(Button3);
         Button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
@@ -96,22 +104,28 @@ public class FrameCustom extends Frame {
         Button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Scanner scanner = new Scanner("ImageData");
-                try {
-                    BufferedImage myPicture = ImageIO.read(new File(scanner.nextLine()));
-                    JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-                    panel.add(picLabel);
-                }
-                catch(IOException m){
-                    System.out.println("FileIsNotFound");
-                }
+
             }
         });
-        panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        frame.add(panel);
-        Image image = Toolkit.getDefaultToolkit().getImage("Icon.png");
-        frame.setIconImage(image);
+        HeaderPane.setLayout(new FlowLayout(FlowLayout.LEFT));
+        HeaderPane.setBounds(0,0, 1200, 40);
+        frame.add(HeaderPane);
+
+
         frame.setVisible(true);
+
+
+        try {
+            File file = new File("ImageData");
+            Scanner scanner = new Scanner(file);
+            Image image = Toolkit.getDefaultToolkit().getImage(scanner.nextLine());
+            frame.setIconImage(image);
+            scanner.close();
+
+        }
+        catch(IOException m){
+            System.out.println("FileIsNotFound");
+        }
     }
 
 
