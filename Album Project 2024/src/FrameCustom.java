@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class FrameCustom extends Frame {
-    public CanvasDefault canvas = new CanvasDefault();
+    public CanvasDefault canvas = new CanvasDefault(false);
     boolean isFilledOut = false;
     String filepath = null;
     String TextFieldOne;
@@ -36,10 +36,9 @@ public class FrameCustom extends Frame {
 
         canvas.setLayout(new BorderLayout());
         canvas.add(new Button("Ender"), BorderLayout.SOUTH);
-        canvas.setPreferredSize(new Dimension(1200, 720));
+       // canvas.setPreferredSize(new Dimension(1200, 720));
         JScrollPane scrollPane = new JScrollPane(canvas,ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollPane.setBounds(0, 40, 1180, 700);
-        scrollPane.setBackground(Color.BLACK);
         frame.add(scrollPane);
 
 
@@ -55,6 +54,7 @@ public class FrameCustom extends Frame {
 
                 dialog.add(ButtonSelectFile, BorderLayout.NORTH);
                 ButtonSelectFile.addActionListener(new ActionListener() {
+
                     public void actionPerformed(ActionEvent e) {
                         JFileChooser fileChooser = new JFileChooser();
                         fileChooser.showOpenDialog(null);
