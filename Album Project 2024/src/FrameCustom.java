@@ -2,10 +2,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
@@ -19,30 +16,29 @@ public class FrameCustom extends Frame {
     String TextFieldOne;
     String TextFieldTwo;
     boolean dialogVisibility = true;
+    boolean IsSortedByDate = false;
 
     FrameCustom() {
+        //We are creating the main Frame
         JFrame frame = new JFrame("Album Organized");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1200, 720);
         JButton Button1 = new JButton("Add Image");
-        JButton Button2 = new JButton("Catagories");
-        JButton Button3 = new JButton("Upload File");
+        JButton Button2 = new JButton("Delete");
+       //  JButton Button3 = new JButton("Upload File");
         JPanel HeaderPane = new JPanel();
-
         HeaderPane.add(Button1);
         HeaderPane.add(Button2);
+       //  HeaderPane.add(Button3);
         HeaderPane.setBackground(Color.BLACK);
         frame.setLayout(null);
-
         canvas.setLayout(new BorderLayout());
         canvas.add(new Button("Ender"), BorderLayout.SOUTH);
        // canvas.setPreferredSize(new Dimension(1200, 720));
         JScrollPane scrollPane = new JScrollPane(canvas,ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollPane.setBounds(0, 40, 1180, 700);
         frame.add(scrollPane);
-
-
-        HeaderPane.add(Button3);
+        //We are now implimenting a Button to Choose our images
         Button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
@@ -91,6 +87,7 @@ public class FrameCustom extends Frame {
                                 dialogVisibility = false;
                                 dialog.setVisible(false);
                                 writer.close();
+
                             }
                             catch(IOException m){
                                 System.out.println("FileIsNotFound");
@@ -101,32 +98,31 @@ public class FrameCustom extends Frame {
                 dialog.setVisible(true);
             }
         });
+        //This Button is able to delete the contents of the Album
         Button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                try {
+                    PrintWriter file = new PrintWriter("ImageData");
+                    file.close();
+                }
+                catch(FileNotFoundException f){
+                    System.out.println("FileNotFoundException");
+                }
             }
         });
+        //This is a prototype
+        // Button3.addActionListener(new ActionListener() {
+            ////public void actionPerforme;d(ActionEvent e) {
+             //   canvas = new CanvasDefault(IsSortedByDate);
+
+           // }
+        // });
         HeaderPane.setLayout(new FlowLayout(FlowLayout.LEFT));
         HeaderPane.setBounds(0,0, 1200, 40);
         frame.add(HeaderPane);
-
-
         frame.setVisible(true);
-
-
-        try {
-            File file = new File("ImageData");
-            Scanner scanner = new Scanner(file);
-            Image image = Toolkit.getDefaultToolkit().getImage(scanner.nextLine());
+            Image image = Toolkit.getDefaultToolkit().getImage("Icon.png");
             frame.setIconImage(image);
-            scanner.close();
-
-        }
-        catch(IOException m){
-            System.out.println("FileIsNotFound");
-        }
     }
-
-
 }
